@@ -43,6 +43,7 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
         return combineLatest(
           refs.map((ref) => {
             const draftRef = {...ref, _id: getDraftId(ref._id)}
+
             const draft$ =
               perspective === 'previewDrafts'
                 ? documentPreviewStore
@@ -88,7 +89,15 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
     const sub = previews$.subscribe((snapshots) => {
       comlink.post({
         type: 'presentation/preview-snapshots',
-        data: {snapshots},
+        data: {
+          snapshots: snapshots
+            .filter((s) => s.snapshot)
+            .map((s) => {
+              const snapshot = s.snapshot as PreviewValue & {_id: string}
+
+              return {...snapshot, _id: getPublishedId(snapshot._id)}
+            }),
+        },
       })
     })
 

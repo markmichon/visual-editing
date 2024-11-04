@@ -140,6 +140,14 @@ export type VisualEditingControllerMsg =
         event: ReconnectEvent | WelcomeEvent | MutationEvent
       }
     }
+  | {
+      type: 'presentation/releases'
+      data: any
+    }
+  | {
+      type: 'presentation/document-versions'
+      data: any
+    }
 
 /**
  * @public
@@ -259,6 +267,11 @@ export type VisualEditingNodeMsg =
       response: {
         features: Record<string, boolean>
       }
+    }
+  | {
+      type: 'visual-editing/document-versions'
+      data: any
+      response: any
     }
 
 /**
