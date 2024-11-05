@@ -89,15 +89,7 @@ const PostMessagePreviews: FC<PostMessagePreviewsProps> = (props) => {
     const sub = previews$.subscribe((snapshots) => {
       comlink.post({
         type: 'presentation/preview-snapshots',
-        data: {
-          snapshots: snapshots
-            .filter((s) => s.snapshot)
-            .map((s) => {
-              const snapshot = s.snapshot as PreviewValue & {_id: string}
-
-              return {...snapshot, _id: getPublishedId(snapshot._id)}
-            }),
-        },
+        data: {snapshots},
       })
     })
 
